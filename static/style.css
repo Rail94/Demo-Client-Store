@@ -1,0 +1,239 @@
+.navbar-color {
+    background-color: red;
+    background-image: linear-gradient(to right, rgba(255, 0, 0, 0), rgb(180, 0, 0));
+}
+
+.text {
+    font-family: 'Fraunces', sans-serif;
+    font-size: 18px;
+}
+
+.text-white {
+    color: white;
+    font-family: 'Fraunces', sans-serif;
+}
+
+.link {
+    font-family: 'Fraunces', sans-serif;
+    color: whitesmoke;
+    transition: 0.5s;
+}
+
+.link:hover {
+    font-size: 1.3rem !important;
+    font-weight: 700;
+    transition: 0.5s;
+}
+
+.search-adv {
+    border: 1px solid gray;
+    background-color: whitesmoke;
+    padding: 10px 5px;
+}
+
+.btn-adv {
+    background-color: red;
+    color: white;
+    padding: 15px 25px;
+    transition: 0.3s;
+}
+
+.btn-adv:hover {
+    background-color: rgb(200, 0, 0);
+    transition: 0.3s;
+}
+
+.btn-settings {
+    background-color: red;
+    border: 1px solid gray;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: 0.3s;
+}
+
+.btn-settings:hover {
+    background-color: rgb(200, 0, 0);
+    transition: 0.3s;
+}
+
+.art-card {
+    font-family: 'Fraunces', sans-serif;
+    border-radius: 20px;
+    background-color: whitesmoke;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
+    width: 18rem;
+    height: 27rem;
+}
+
+.info-card {
+    color: white;
+    background-color: black;
+    background-image: linear-gradient(#000000, #404040);
+    border: 3px groove red;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+}
+
+.swiper-button-next:after {
+    color: red !important;
+}
+
+.swiper-button-prev:after {
+    color: red !important;
+}
+
+.swiper-upload {
+    font-family: 'Fraunces', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.login-box {
+    font-family: 'Fraunces', sans-serif;
+    border: 1px solid gray;
+    border-radius: 20px;
+    color: white;
+    background-color: black;
+    background-image: linear-gradient(#000000, #404040);
+    box-shadow: 10px 10px 5px rgba(255, 255, 255, 0.3);
+    width: 40rem;
+    height: 22rem;
+}
+
+.login-field {
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px 5px;
+}
+
+.login-btn {
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    width: 60%;
+    transition: 0.5s;
+}
+
+.login-btn:hover {
+    background-color: rgb(255, 255, 255);
+    color: black;
+    transition: 0.5s;
+}
+
+.search-field {
+    border: 1px solid gray;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 10px 5px;
+}
+
+.search-btn {
+    border: 1px solid gray;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    transition: 0.3s;
+}
+
+.search-btn:hover {
+    background-color: rgb(200, 0, 0);
+    transition: 0.3s;
+}
+
+.info-btn {
+    border-radius: 10px;
+    background-color: rgb(255, 0, 0);
+    background-image: linear-gradient(to right, rgba(255, 0, 0, 0), rgb(200, 0, 0));
+    width: 3rem;
+    height: 3rem;
+}
+
+.delete-btn {
+    border-radius: 10px;
+    background-color: rgb(255, 0, 0);
+    background-image: linear-gradient(to right, rgba(255, 0, 0, 0), rgb(200, 0, 0));
+    width: 6rem;
+    height: 3rem;
+}
+
+.user-box {
+    font-family: 'Fraunces', sans-serif;
+    border: 1px solid gray;
+    border-radius: 20px;
+    color: white;
+    background-color: black;
+    background-image: linear-gradient(#000000, #404040);
+    box-shadow: 10px 10px 5px rgba(255, 255, 255, 0.3);
+    width: 40rem;
+    padding-bottom: 1rem;
+}
+
+.add-user {
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color: rgb(255, 0, 0);
+    width: 3.5rem;
+    height: 3rem;
+}
+
+.add-user:hover {
+    background-color: rgb(200, 0, 0);
+    transition: 0.3s;
+}
+
+.register-box {
+    font-family: 'Fraunces', sans-serif;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 2rem;
+    background-color: black;
+    background-image: linear-gradient(#000000, #404040);
+    box-shadow: 10px 10px 5px rgba(255, 255, 255, 0.3);
+    width: 40rem;
+}
+
+@media screen and (min-width: 200px) and (max-width: 573px) {
+    .mobile-top {
+        margin-top: 1rem;
+    }
+
+    .mobile-y {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .swiper-upload {
+        font-size: 1.5rem;
+    }
+
+    .upload-text {
+        font-size: 12px;
+    }
+
+    .login-box {
+        width: 20rem;
+        height: 25rem;
+    }
+
+    .search-field {
+        width: 90%;
+    }
+
+}
+
+@media screen and (min-width: 574px) and (max-width: 2000px) {
+    .login-field {
+        width: 70%;
+    }
+
+    .login-btn {
+        width: 70%;
+    }
+
+}
