@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{items.item}}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        #edit-description {
+            display: none;
+        }
+
+        #hide-description {
+            display: block;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container-fluid" style="background-color: white; background-image: linear-gradient(#b8b8b8, #ffffff);">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="my-lg-5">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                {% for row in images %}
+                                <div class="swiper-slide"
+                                    style="background-image: url('{{ url_for('static', filename='upload/' ~ row.image_url) }}'); background-position: center; background-repeat: no-repeat; background-size: contain; height: 600px;">
+                                    {% if images | length > 1 and session.admin %}
+                                    <form action="{{url_for('delete_image')}}" method="post">
+                                        <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                        <input type="hidden" name="image-id" value="{{row.image_id}}">
+                                        <button type="submit"
+                                            style="background-color: red; border: 1px solid gray; color:white; border-radius: 5px"
+                                            class="mt-4 ms-4"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                height="16" fill="currentColor" class="bi bi-trash3-fill"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                                            </svg></button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="swiper-pagination"></div>
+
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+
+                            <div class="swiper-scrollbar"></div>
+                        </div>
+                    </div>
+                    {% if session.admin %}
+                    <div class="info-card mt-5 mb-5 order-last">
+                        <div class="text">
+                            <div class="mb-4">
+                                <h3>Article Settings:</h3>
+                            </div>
+                            <form action="{{url_for('add_category')}}" method="post">
+                                <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                <div class="mb-2">New Category: <input type="text" style="width: 8rem;"
+                                        name="new-category" required><button type="submit"
+                                        class="ms-2 fw-bold btn-settings text-decoration-none">+</button>
+                                </div>
+                            </form>
+                            <form action="{{url_for('delete_category')}}" method="post">
+                                <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                <div class="mb-2">Delete Category: <select class="mt-2 py-1 me-1" name="category">
+                                        {% for category in categories %}
+                                        <option value="{{category.category_id}}">{{category.category}}</option>
+                                        {% endfor %}
+                                    </select><button type="submit"
+                                        class="ms-2 fw-bold btn-settings text-decoration-none" href="#"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                                        </svg></button></div>
+                            </form>
+                            {% if category_err %}
+                            <div style="color: red;">{{ category_err }}</div>
+                            {% endif %}
+                            <form action="{{url_for('upload_file')}}" method="post" enctype="multipart/form-data">
+                                <div class="mt-2">Upload Image</div>
+                                <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                <input type="file" name="file" class="upload-text"
+                                    style="background-color: whitesmoke; color: black;">
+                                <input type="submit" value="Upload"
+                                    style="background-color: red; border: 1px solid gray; border-radius: 5px; color: white;">
+                            </form>
+                            {% if error %}
+                            <div style="color: red;">{{ error }}</div>
+                            {% endif %}
+                            <form action="{{url_for('edit_quantity')}}" method="post">
+                                <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                <div class="my-3">Quantity: <input type="number" name="item-quantity"
+                                        value="{{ items.quantity }}" style="width: 4rem;"><button type="submit"
+                                        class="ms-2 fw-bold btn-settings text-decoration-none"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg></button></div>
+                            </form>
+                            <form action="{{url_for('add_variant')}}" method="post">
+                                <div class="mb-1">New Option:</div>
+                                <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                <div class="mb-1"><input type="text" name="new-variant" placeholder="Option..."
+                                        required></div>
+                                <div class="mb-1"><input type="number" name="variant-price"
+                                        placeholder="{{ '%.2f' % 0 }} €" step="0.01" value="" required></div>
+                                <div class="mb-3"><button type="submit"
+                                        class="ms-2 btn-settings text-decoration-none">Insert Option</button>
+                                </div>
+                            </form>
+                            <div><a class="btn-settings text-decoration-none"
+                                    href="{{url_for('delete_article', id=items.insertion_id)}}">Remove Article</a></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    {% if session.admin %}
+                    <div class="info-card mt-lg-5 mb-5">
+                        <div class="text">
+                            <div class="mb-4">
+                                <h3>Article Info:</h3>
+                            </div>
+                            <div>
+                                <form action="{{url_for('edit_item')}}" method="post">
+                                    <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                    <input type="text" name="item-name" value="{{items.item}}" maxlength="50"
+                                        style="width: 70%;">
+                                    <button type="submit" class="mb-2 ms-2 btn-settings"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg></button>
+                                </form>
+
+                            </div>
+                            <form action="{{url_for('edit_category')}}" method="post">
+                                <div class="mb-2">Category: <select class="mt-2 py-1 me-1" name="item-category">
+                                        <option value="">{{items.category}}</option>
+                                        {% for category in categories %}
+                                        <option value="{{category.category_id}}">{{category.category}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                    <button class="ms-2 btn-settings"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                            height="20" fill="currentColor" class="bi bi-pencil-square"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg></button>
+                                </div>
+                            </form>
+                            {% if variants %}
+                            <div class="mb-3">
+                                Options:
+                                <ul name="option">
+                                    {% for row in variants %}
+                                    <li class="mb-2">{{ row.variant }}: {{ '{:.2f}'.format(row.variant_price)
+                                        }}€<a
+                                            href="{{url_for('delete_variant', id=row.variant_id, insertion_id=items.insertion_id)}}"
+                                            class="ms-3"
+                                            style="border: 1px solid black; border-radius: 5px; background-color: gray; cursor: pointer; text-decoration: none; color: white; padding: 5px;"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                                            </svg></a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                            <form action="{{url_for('edit_price')}}" method="post">
+                                <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                <div class="mb-2">Price: <input type="number" step="0.01" name="item-price"
+                                        value="{{ '%.2f' % items.price }}" style="width: 6rem;">€<button type="submit"
+                                        class="ms-2 btn-settings"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                            height="20" fill="currentColor" class="bi bi-pencil-square"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg></button></div>
+                            </form>
+                            <div class="mb-2">Shipping Time: 10-15 days <button class="ms-2 btn-settings"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path
+                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                        <path fill-rule="evenodd"
+                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                    </svg></button></div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="info-card mt-lg-5 mb-5">
+                        <div class="text">
+                            <div class="mb-4">
+                                <h3>Article Info:</h3>
+                            </div>
+                            <div class="mb-3">{{items.item}}</div>
+                            <div class="mb-3">Category: {{items.category}}</div>
+
+
+                            {% if variants %}
+                            <div class="mb-3">
+                                Options:
+                                <select id="variantSelect" name="option">
+                                    <option value="" data-price="0">Standard</option>
+                                    {% for row in variants %}
+                                    <option data-price="{{ row.variant_price }}" value="{{ row.variant }}">{{
+                                        row.variant }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% endif %}
+                            <div class="mb-3">Price: <span id="finalPrice">{{ items.price }}</span>€</div>
+
+
+                            <div class="mb-3">Shipping Time: 10-15 days</div>
+                        </div>
+                    </div>
+
+                    {% endif %}
+                    <div class="info-card mt-lg-5 mb-5">
+                        <div class="text">
+                            <div class="mb-4">
+                                <h3>Description: {% if session.admin %}<button onclick="editDescription()"
+                                        class="ms-2 btn-settings"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                            height="20" fill="currentColor" class="bi bi-pencil-square"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg></button>{% endif %}</h3>
+                            </div>
+                            <div id="edit-description" class="mb-3">
+                                <form action="{{url_for('edit_description')}}" method="post">
+                                    <input type="hidden" name="item-id" value="{{items.insertion_id}}">
+                                    <div class="d-lg-none">
+                                        <textarea name="description" rows="25"
+                                            cols="21">{{items.description}}</textarea>
+                                    </div>
+                                    <div class="d-none d-lg-block">
+                                        <textarea name="description" rows="20"
+                                            cols="58">{{items.description}}</textarea>
+                                    </div>
+                                    <button type="submit" class="ms-2 btn-settings">Submit</button>
+                                </form>
+                            </div>
+                            <div id="hide-description" class="mb-3">
+                                <p>{{items.description | nl2br | safe }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function editDescription() {
+            let description = document.getElementById("edit-description");
+            let hide = document.getElementById("hide-description");
+
+            if (description.style.display === "none" || description.style.display === "") {
+                description.style.display = "block";
+                hide.style.display = "none";
+            } else {
+                description.style.display = "none";
+                hide.style.display = "block";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            if (window.innerWidth >= 992) {
+                document.querySelector('.d-lg-none textarea').setAttribute('disabled', 'true');
+            } else {
+                document.querySelector('.d-lg-block textarea').setAttribute('disabled', 'true');
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var basePrice = parseFloat({{ items.price }});
+
+        var variantSelect = document.getElementById('variantSelect');
+        var finalPriceElement = document.getElementById('finalPrice');
+
+        function updatePrice() {
+            var selectedOption = variantSelect.options[variantSelect.selectedIndex];
+            var variantPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            var finalPrice = basePrice + variantPrice;
+
+            finalPriceElement.textContent = finalPrice.toFixed(2);
+        }
+
+        variantSelect.addEventListener('change', updatePrice);
+    });
+        function updatePrice() {
+            var selectedOption = variantSelect.options[variantSelect.selectedIndex];
+            var variantPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            var finalPrice = basePrice + variantPrice;
+            finalPriceElement.textContent = finalPrice.toFixed(2);
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            direction: 'horizontal',
+            loop: true,
+            slidesPerView: 1,
+            speed: 400,
+            spaceBetween: 100,
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
+</body>
+
+</html>
